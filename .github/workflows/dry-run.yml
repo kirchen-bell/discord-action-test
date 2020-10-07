@@ -1,0 +1,26 @@
+name: dry run
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  dry-run:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Actions for Discord
+        uses: Ilshidur/action-discord@0.0.2
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        with:
+          args: "Hi i'm organic ${{ matrix.os }}"
+      # - name: Actions for Discord
+      #   uses: neuenmuller/action-discord@composite
+      #   env:
+      #     DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      #   with:
+      #     args: "Hi i'm neuenmuller ${{ matrix.os }}"
